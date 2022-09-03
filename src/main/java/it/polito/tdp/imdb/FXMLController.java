@@ -5,11 +5,14 @@
 package it.polito.tdp.imdb;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.imdb.model.Director;
 import it.polito.tdp.imdb.model.Model;
+import it.polito.tdp.imdb.model.Vicino;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -53,11 +56,18 @@ public class FXMLController {
     	txtResult.clear();
     	int anno= this.boxAnno.getValue(); 
     	txtResult.appendText(model.creaGrafo(anno));
+    	for (Director d: model.getVertici()) {
+    	    	this.boxRegista.getItems().addAll(d);
     }
-
+    }
     @FXML
     void doRegistiAdiacenti(ActionEvent event) {
-
+    	txtResult.clear();
+    	Director d= this.boxRegista.getValue(); 
+    	txtResult.appendText("Registi adiacenti a: "+d);
+    	for(Vicino v: model.getAdiacenti(d)) {
+    	txtResult.appendText("\n"+v.toString());
+    	}
     }
 
     @FXML

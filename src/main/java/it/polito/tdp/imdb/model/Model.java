@@ -1,5 +1,7 @@
 package it.polito.tdp.imdb.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,5 +42,28 @@ public class Model {
 		
 		
 		return "Grafo creato!\n# Vertici:"+grafo.vertexSet().size()+ "\n# Archi: "+grafo.edgeSet().size();	
+	}
+
+	public List<Adiacenza> getArchi() {
+		return archi;
+	}
+
+	public void setArchi(List<Adiacenza> archi) {
+		this.archi = archi;
+	}
+
+	public List<Director> getVertici() {
+		return vertici;
+	}
+	
+	public List<Vicino> getAdiacenti(Director d){
+		List<Director> vicini= Graphs.neighborListOf(this.grafo, d);
+		List<Vicino> result= new ArrayList<>();
+		for (Director d1: vicini) {
+			int peso= (int) this.grafo.getEdgeWeight(this.grafo.getEdge(d, d1));
+			result.add(new Vicino(d1,peso));
+		}
+		Collections.sort(result);
+		return result;
 	}
 }
